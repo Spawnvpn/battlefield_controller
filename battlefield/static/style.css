@@ -1,0 +1,45 @@
+div, a {
+    color: #fff9fc
+}
+
+
+body {
+    background-image: url("image.jpg");
+    background-size: cover;
+}
+
+h1 {
+    float: right;
+    color: #4a4d6a;
+    padding-right: 50px;
+}
+
+form, h3 {
+    float: right;
+    color: #4a4d6a;
+    margin-top: 10px;
+    padding-right: 30px;
+}
+
+b {
+    color: #4a4d6a;
+}
+
+#param {
+    float: right;
+    color: #4a4d6a;
+}
+
+.container {
+    float: right;
+    width: 300px;
+    margin: 10px auto;
+}
+
+
+.winner {
+    float: right;
+    color: #2a3169;
+    font-size: 20px;
+    padding-right: 50px;
+}

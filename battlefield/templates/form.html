@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+<div><h1>BATTLEFIELD</h1></div>
+<div><h3>Enter parameters of <span id="count">1</span> army</h3></div>
+<form id="param" action="" onsubmit="event.preventDefault();" method="POST" name="param">{% csrf_token %}
+    <div><table>
+        <tr><td><b>Quantity of squads</b></td>
+        <td><select name="squads">
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select></td></tr>
+        <tr><td><b>Quantity of units</b></td>
+        <td><select name="units">
+            <option>5</option>
+            <option>6</option>
+            <option>7</option>
+            <option>8</option>
+            <option>9</option>
+            <option>10</option>
+        </select></td></tr>
+        <tr><td><b>Strategy</b></td>
+        <td><select name="strategy">
+            <option>strongest</option>
+            <option>weakest</option>
+            <option>random</option>
+        </select></td></tr>
+        <tr><td><input type="submit" value="Enter" name="param"></td></tr>
+        </table></div>
+        <script>
+            $(function() {
+    $('form').submit(function() {
+        $.ajax({
+            url: '/form',
+            data: $('form').serialize(),
+            type: 'POST',
+            success: function(response) {
+                console.log(response);
+                if (response == '/result') {
+                    window.location = response
+                }
+                else {
+                    i = Number($("#count").text());
+                    i += 1;
+                    $("#count").text(i);
+                }
+            }
+        });
+    });
+});
+        </script>
+    </form>
+    </div>
+{% endblock %}
+</body>
+</html>

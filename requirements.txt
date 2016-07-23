@@ -1,0 +1,4 @@
+Django==1.9.8
+pylibmc==1.5.1
+python-memcached==1.58
+six==1.10.0
