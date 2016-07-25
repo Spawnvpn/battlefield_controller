@@ -32,13 +32,16 @@ def form(request):
                 strategy=session['armies_strategy'])
             go.start()
             session['winner'] = go.winner
+            session['log'] = go.battle_log
             return HttpResponse('/result')
     return render(request, 'form.html')
 
 
 def result(request):
     winner = session['winner']
-    return render(request, 'result.html', context={'winner': winner})
+    log = session['log']
+    return render(request, 'result.html', context={'winner': winner,
+                                                   'log': log})
 
 
 session = SessionStore()

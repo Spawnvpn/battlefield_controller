@@ -146,11 +146,11 @@ class Battlefield(object):
         self.squads = kwargs['squads']
         self.strategy = kwargs['strategy']
         self.winner = winner
+        self.battle_log = list()
 
     def start(self):
         """Choose of list of the armies two random army and while they are
         active, there is a battle. After that the cycle is repeated."""
-
         armies = list()
         for x in range(self.quan_armies):
             number_of_units = int(self.units[x])
@@ -161,10 +161,18 @@ class Battlefield(object):
         while self.armies_active:
             some_army = armies[armies.index(random.choice(armies))]
             some_else_army = armies[armies.index(random.choice(armies))]
-            if some_army != some_else_army:
+            if some_army != some_else_army and some_army.active and some_else_army.active:
                 while some_army.active and some_else_army.active:
                     some_army.attack(some_else_army)
                     some_else_army.attack(some_army)
+                if some_army.active:
+                    self.battle_log.append('{0} army defeated {1} '.format(
+                        armies.index(some_army) + 1,
+                        armies.index(some_else_army) + 1))
+                elif some_else_army.active:
+                    self.battle_log.append('{0} army defeated {1} '.format(
+                        armies.index(some_else_army) + 1,
+                        armies.index(some_army) + 1))
             self.is_active_armies(armies)
 
     def is_active_armies(self, armies):
