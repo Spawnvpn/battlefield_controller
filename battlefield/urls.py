@@ -19,7 +19,8 @@ import battlefield.views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/', battlefield.views.index),
-    url(r'^form', battlefield.views.form),
-    url(r'^result/', battlefield.views.result),
+    url(r'^index/$', battlefield.views.index),
+    url(r'^form/$', battlefield.views.form),
+    url(r'^result/$', battlefield.views.result),
+    url(r'^result-data/$', battlefield.views.data_render),
 ]

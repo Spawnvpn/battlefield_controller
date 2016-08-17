@@ -3,16 +3,32 @@
 <head>
     <meta charset="UTF-8">
 </head>
-<body>
+<body onload="ReceiveData();">
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
     <div><h1>BATTLEFIELD</h1></div>
-    {% for event in log %}
-    <div class="winner">{{ event }}</div>
-    {% endfor %}
-    <div class="winner">{{ winner }}</div>
+    <div class="event" id="event"></div>
 </div>
+        <script>
+        function ReceiveData() {
+            var receive = setInterval(ReceiveData, 1000);
+                $.ajax({
+                    url: '/result-data/',
+                    data : '',
+                    type: 'POST',
+                    success: function(response) {
+                        if (response) {
+                            console.log(response);
+                            $("#event").text(response);
+                        }
+                        else {
+                            clearInterval(receive);
+                        }
+                    }
+                });
+        }
+    </script>
 {% endblock %}
 </body>
 </html>

@@ -1,7 +1,9 @@
-from battlefield import battle
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+import json
+import socket
 from django.contrib.sessions.backends.db import SessionStore
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, redirect
+from django.views.decorators.csrf import csrf_exempt
 
 
 def index(request):
@@ -26,22 +28,28 @@ def form(request):
         session['armies_strategy'].append(request.POST.get('strategy'))
         if len(session['armies_units']) == int(
                 session['quantity']):
-            go = battle.Battlefield(
+            battle_data = dict(
                 quan_armies=int(session['quantity']),
                 units=session['armies_units'], squads=session['armies_squads'],
                 strategy=session['armies_strategy'])
-            go.start()
-            session['winner'] = go.winner
-            session['log'] = go.battle_log
+            dump = json.dumps(battle_data)
+            sock.connect(('', 9090))
+            dump = str.encode(dump)
+            sock.send(dump)
             return HttpResponse('/result')
     return render(request, 'form.html')
 
 
 def result(request):
-    winner = session['winner']
-    log = session['log']
-    return render(request, 'result.html', context={'winner': winner,
-                                                   'log': log})
+    return render(request, 'result.html')
+
+
+@csrf_exempt
+def data_render(request):
+    data = sock.recv(4096)
+    data = bytes.decode(data)
+    return JsonResponse(data, safe=False)
 
 
 session = SessionStore()
+sock = socket.socket()
